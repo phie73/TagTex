@@ -32,13 +32,14 @@ WCA_database_path = '../wca-competition-orga/WCA_export.tsv/'
 
 # get competitor information for specific competition
 competitors = pd.read_csv(f'{competitors_path}.csv')
+competitors_also_deleted = pd.read_csv(f'{competitors_path}-all.csv')
 names = competitors['Name']
 countries = competitors['Country']
 # replace NaN Ids with Str 'Newcomer' for proper printout
 competitors['WCA ID'].replace(np.nan, 'Newcomer', inplace=True) # for all views of the column
 wca_ids = competitors['WCA ID']
 # do not want zero-counting, we are humans and start with * 1 * :-)
-competitor_ids = np.array(competitors.index + 1)
+competitor_ids = np.array(competitors_also_deleted.loc[competitors_also_deleted.Name.isin(competitors.Name)].index + 1)
 
 # get competition information (associated staff like organizers and delegates)
 competitions = pd.read_csv(f'{WCA_database_path}WCA_export_Competitions.tsv',sep='\t')
