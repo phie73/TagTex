@@ -15,4 +15,10 @@ python main.py -c ../wca-competition-orga/GermanNationals2023-registration -id G
 ```
 This output can be placed in the template document and will serve as the content to be formatted into printable nametags.
 
+If you want to sort the nametags alphabetically, just add `-o name` to the script, e.g. you could do
+```shell
+python main.py -c ../wca-competition-orga/GermanNationals2023-registration -id GermanNationals2023 -o name > output.txt
+```
+(The default is `-o id` which sorts by time of registration, i.e. the WCA Live ID.)
+
 It is advisable to check with a 100% scaled view of the resulting PDF if the size fits with your physical nametags before printing and cutting. The labels package documentation can assist with choosing other dimensions for whitespace on the sheets or a different setup of the grid, and the current example has been tested with 55 x 90 mm tags.
