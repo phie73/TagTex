@@ -100,7 +100,7 @@ for i in range(len(competitor_ids)):
     country_string = f'{countries[i]}'
     wca_id_string = f'{wca_ids[i]}'
     if wca_id_string == 'Newcomer':
-        wca_id_string = '\\textcolor{yellow}{' + wca_id_string + '}'
+        wca_id_string = '\\textcolor{ForestGreen}{' + wca_id_string + '}'
     competitor_id_string = competitors['competitor_ids'][i]
     
     is_del = True if names[i] in delegates_ else False
@@ -116,7 +116,7 @@ for i in range(len(competitor_ids)):
     
 
     if optional_role_string != '':
-        tex_builder += '\\selectlanguage{english} \\ \\\\ ' + '\\textcolor{red}{' + optional_role_string + '} \\\\ '
+        tex_builder += '\\selectlanguage{english} \\ \\\\ ' + '\\textcolor{Red}{' + optional_role_string + '} \\\\ '
     
     tex_builder += '\\selectlanguage{english} \\begin{tabular}{lcr}	\\qquad &  \\qquad & \\qquad  \\\\' + wca_id_string + '&' + country_string + '& ID: ' + f'{competitor_id_string}' + '\\\\ \\end{tabular}'
     
