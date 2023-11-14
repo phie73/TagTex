@@ -22,3 +22,8 @@ python main.py -c ../wca-competition-orga/GermanNationals2023-registration -id G
 (The default is `-o id` which sorts by time of registration, i.e. the WCA Live ID.)
 
 It is advisable to check with a 100% scaled view of the resulting PDF if the size fits with your physical nametags before printing and cutting. The labels package documentation can assist with choosing other dimensions for whitespace on the sheets or a different setup of the grid, and the current example has been tested with 55 x 90 mm tags.
+
+#### Used at
+- Rheinland-Pfalz Open 2023
+- Everstädter Einsteiger Event / Darmstadt Dodecahedron Days 2023
+- Kölner Kubing 2023
