@@ -1,37 +1,50 @@
-% excellent stuff: https://rsmith.home.xs4all.nl/howto/printing-labels-with-latex.html
-\documentclass[a4paper,12pt]{article}
-\usepackage[T1,T2A]{fontenc}
+%%%%
+%
+% inspired by:  https://tex.stackexchange.com/questions/94582/automating-the-creation-of-name-badges-for-an-event
+% discoverd docs: https://ctan.net/macros/latex/contrib/ticket/doc/manual.pdf
+%%%%
+% use the corresponding paper size for your ticket definition
+\documentclass[a4paper,10pt]{article}
 
-\usepackage[utf8]{inputenc}
-\usepackage[english, russian]{babel}
-\usepackage{CJKutf8}
-\usepackage{tgpagella} % Default fonts
-\usepackage{cmbright} % sans serif everywhere
-\usepackage{helvet}
+% load ticket.sty with the appropriate ticket definition
+%\\usepackage[flashCard,crossmark]{ticket} %no boxes
+\usepackage[flashCard,boxed]{ticket} %boxes
 
-\usepackage[dvipsnames]{xcolor}
-\usepackage[newdimens]{labels}
-\LabelGridtrue
-\LabelCols=2
-\LabelRows=5
-\LeftPageMargin=15mm
-\RightPageMargin=15mm
-\TopPageMargin=11mm
-\BottomPageMargin=11mm
-\InterLabelRow=0mm
-\LeftLabelBorder=0mm
-\RightLabelBorder=0mm
-\TopLabelBorder=5mm
-\BottomLabelBorder=5mm
-% Create an empty label; for if the label has already been used
-\newcommand{\emptylabel}{\rule{0mm}{22mm}}
-%\fboxrule=1pt
-%\fboxsep=0pt
+% i have no idea how big usual nametags are, so just going with something I found on amazon which looks similar to the things usually used 
+\unitlength=1mm
+\ticketSize{82}{55}
+\ticketNumbers{2}{5}
+
+% load misc stuff
+\usepackage{graphicx}
+
+%% --- front ----%
+% default nametag. \ticketdefault is somewhat like a background
+\renewcommand{\ticketdefault}{%
+  \put(41, 2){\makebox[0mm]{\includegraphics[width=42mm]{GCA_original_larger}}}%todo do something with that
+  \put(41, 40){\makebox[0mm]{\Large \input{name}}}
+}
+
+% what comes on the tag
+\newcommand{\card}[4]{\ticket{%
+    \put(41,32){\makebox[0mm]{\bfseries\Large #1}}
+    \put(41,27){\makebox[0mm]{\bfseries #2}}%
+    \put(41,20){\makebox[0mm]{\bfseries\large #3}}%
+}}
+
+
 \begin{document}
-% This is where your labels go
-\addresslabel{\centering{\selectlanguage{english} Nice Competition 2024\vspace{1.1em} \Huge \\ \textbf{\centering \begin{minipage}{82mm}\centering Some Cuber\end{minipage}}}\\ \selectlanguage{english} \ \\ \textcolor{Red}{Delegate, Organizer} \\ \selectlanguage{english} \begin{tabular}{lcr}	\qquad &  \qquad & \qquad  \\1234DELE01&Country& ID: 1\\ \end{tabular}}
-\addresslabel{\centering{\selectlanguage{english} Nice Competition 2024\vspace{1.1em} \Huge \\ \textbf{\centering \begin{minipage}{82mm}\centering Another Cuber\end{minipage}}}\\ \selectlanguage{english} \ \\ \textcolor{Red}{Organizer} \\ \selectlanguage{english} \begin{tabular}{lcr}	\qquad &  \qquad & \qquad  \\1234ORGA01&Country& ID: 2\\ \end{tabular}}
-\addresslabel{\centering{\selectlanguage{english} Nice Competition 2024\vspace{1.1em} \Huge \\ \textbf{\centering \begin{minipage}{82mm}\centering More People\end{minipage}}}\\ \selectlanguage{english} \ \\ \textcolor{Red}{Delegate} \\ \selectlanguage{english} \begin{tabular}{lcr}	\qquad &  \qquad & \qquad  \\1234TRAI01&Country& ID: 3\\ \end{tabular}}
-\addresslabel{\centering{\selectlanguage{english} Nice Competition 2024\vspace{1.1em} \Huge \\ \textbf{\centering \begin{minipage}{82mm}\centering Short Name\end{minipage}\vspace{1.5mm}}}\\ \begin{CJK*}{UTF8}{gbsn} (魔方) \end{CJK*}\\ \selectlanguage{english} \begin{tabular}{lcr}	\qquad &  \qquad & \qquad  \\\textcolor{ForestGreen}{Newcomer}&China& ID: 10\\ \end{tabular}}
-\addresslabel{\centering{\selectlanguage{english} Nice Competition 2024\vspace{1.1em} \Huge \\ \textbf{\centering \begin{minipage}{82mm}\centering Long English Name and translation\end{minipage}\vspace{1.5mm}}}\\ \selectlanguage{russian} (Аа Жж Яя)\\ \selectlanguage{english} \begin{tabular}{lcr}	\qquad &  \qquad & \qquad  \\2024TODO01&Country& ID: 42\\ \end{tabular}}
+\sffamily
+\input{content}
+
+% % --- change stuff for back side ---%
+\backside%
+\oddsidemargin=-14mm %same as marigin on right on even pages
+\renewcommand{\ticketdefault}{%
+}
+\renewcommand{\card}[4]{\ticket{%
+  \put(41,32){\makebox[0mm]{\bfseries\Large #1}}
+  \put(41,27){\makebox[0mm]{\bfseries #4}}%
+}}
+\input{content}
 \end{document}
