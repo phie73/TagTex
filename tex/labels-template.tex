@@ -4,13 +4,12 @@
 % discoverd docs: https://ctan.net/macros/latex/contrib/ticket/doc/manual.pdf
 %%%%
 % use the corresponding paper size for your ticket definition
-\documentclass[a4paper,10pt]{article}
+\documentclass[a4paper,12pt]{article}
 
 % load ticket.sty with the appropriate ticket definition
-%\\usepackage[flashCard,crossmark]{ticket} %no boxes
 \usepackage[flashCard,boxed]{ticket} %boxes
 
-% i have no idea how big usual nametags are, so just going with something I found on amazon which looks similar to the things usually used 
+% i have no idea how big usual nametags are, so just going with something I found on **** which looks similar to the things usually used 
 \unitlength=1mm
 \ticketSize{82}{55}
 \ticketNumbers{2}{5}
@@ -19,18 +18,20 @@
 \usepackage{graphicx}
 \usepackage{anyfontsize}
 \usepackage[table]{xcolor} 
+\usepackage{graphicx}
 
 %% --- front ----%
 % default nametag. \ticketdefault is somewhat like a background
 \renewcommand{\ticketdefault}{%
   \put(41, 2){\makebox[0mm]{\includegraphics[width=42mm]{img/GCA_original_larger}}}%todo do something with that
-  \put(41, 40){\makebox[0mm]{\Large \input{name}}}
+  \put(41, 45){\makebox[0mm]{\resizebox*{78mm}{!}{\Large \input{name}}}}
 }
 
 % what comes on the tag
-\newcommand{\card}[9]{\ticket{%
-    \put(41,32){\makebox[0mm]{\bfseries\Large #1}}
-    \put(41,27){\makebox[0mm]{\bfseries #2}}%
+\newcommand{\card}[5]{\ticket{%
+    \put(41,36){\makebox[0mm]{\bfseries\Large #1}}%todo mit zu langen namen umgehen
+    \put(41,30){\makebox[0mm]{\bfseries #2}}%
+    \put(41,26){\makebox[0mm]{id: #4}}%
     \put(41,20){\makebox[0mm]{\bfseries\large #3}}%
 }}
 
@@ -44,8 +45,8 @@
 \oddsidemargin=-14mm %same as marigin on right on even pages
 \renewcommand{\ticketdefault}{%
 }
-\renewcommand{\card}[9]{\ticket{%
-  \put(41,27){\makebox[0mm]{\tab{#6}{#7}{#8}{#9}}}%
+\renewcommand{\card}[5]{\ticket{%
+  \put(41,27){\makebox[0mm]{\tab{#5}}}%
 }}
 \input{content}
 \end{document}
