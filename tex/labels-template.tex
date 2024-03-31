@@ -17,34 +17,35 @@
 
 % load misc stuff
 \usepackage{graphicx}
+\usepackage{anyfontsize}
+\usepackage[table]{xcolor} 
 
 %% --- front ----%
 % default nametag. \ticketdefault is somewhat like a background
 \renewcommand{\ticketdefault}{%
-  \put(41, 2){\makebox[0mm]{\includegraphics[width=42mm]{GCA_original_larger}}}%todo do something with that
+  \put(41, 2){\makebox[0mm]{\includegraphics[width=42mm]{img/GCA_original_larger}}}%todo do something with that
   \put(41, 40){\makebox[0mm]{\Large \input{name}}}
 }
 
 % what comes on the tag
-\newcommand{\card}[4]{\ticket{%
+\newcommand{\card}[9]{\ticket{%
     \put(41,32){\makebox[0mm]{\bfseries\Large #1}}
     \put(41,27){\makebox[0mm]{\bfseries #2}}%
     \put(41,20){\makebox[0mm]{\bfseries\large #3}}%
 }}
 
+\input{table}
 
 \begin{document}
 \sffamily
 \input{content}
-
 % % --- change stuff for back side ---%
 \backside%
 \oddsidemargin=-14mm %same as marigin on right on even pages
 \renewcommand{\ticketdefault}{%
 }
-\renewcommand{\card}[4]{\ticket{%
-  \put(41,32){\makebox[0mm]{\bfseries\Large #1}}
-  \put(41,27){\makebox[0mm]{\bfseries #4}}%
+\renewcommand{\card}[9]{\ticket{%
+  \put(41,27){\makebox[0mm]{\tab{#6}{#7}{#8}{#9}}}%
 }}
 \input{content}
 \end{document}

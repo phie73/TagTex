@@ -1,0 +1,18 @@
+% blueprint table, idea is to style according needs
+% - opportunity with images for events
+% only events held at the comp are shown
+% no fun in "hacking" latex to extend 9 parameter limits, 
+% so passing 4 always 4 events in one (if 16, grouping variable)
+
+\newcommand{\tab}[4]{
+\fontsize{9pt}{9pt}\selectfont
+\rowcolors{2}{gray!25}{white}
+\begin{tabular}{ c c c c c c c }
+  \rowcolor{gray!50}
+  \bfseries event & \bfseries comp & \bfseries scr & \bfseries judge & \bfseries run\\ 
+  #1 
+  #2
+  #3
+  #4
+\end{tabular}
+}

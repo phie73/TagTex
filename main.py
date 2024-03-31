@@ -43,10 +43,6 @@ for person in persons:
         a['activityId'] = mAAp[a['activityId']]
 print(json.dumps(persons, indent = 2))
 
-# # do not want zero-counting, we are humans and start with * 1 * :-)
-# competitor_ids = np.array(competitors_also_deleted.loc[competitors_also_deleted.Name.isin(competitors.Name)].index + 1)
-# competitors['competitor_ids'] = competitor_ids
-
 # if order_by == 'name':
 #     competitors.sort_values(by=['Name'], inplace=True)
 #     competitors.reset_index(drop=False, inplace=True)
