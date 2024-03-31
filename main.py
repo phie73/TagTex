@@ -33,15 +33,57 @@ for activity in activities:
     mAAp[activity['id']] = activity['activityCode']
     for child in activity['childActivities']:
         mAAp[child['id']] = child['activityCode']
-print(mAAp)
 persons = res_json['persons']
-#pop useless info
+
+tex_builder = ''
 for person in persons:
-    person.pop('personalBests')
-    person.pop('avatar')
+    # structure {Name}{WCAID}{country}{reg id}{assignments[event & comp & scr & judge & run\\]}
+    tex_builder += '\card' + '{' + person["name"] + '}' # todo handel chines or other character names
+    tex_builder += '{' + person["wcaId"] + '}' # todo newcommer handeling
+    tex_builder += '{' + person["countryIso2"] + '}' #todo replace by actual country name
+    tex_builder += '{' + str(person["registrantId"]) + '}'
+
+    assignments = dict()
     for a in person['assignments']:
         a['activityId'] = mAAp[a['activityId']]
-print(json.dumps(persons, indent = 2))
+
+        if (a['activityId'].startswith("333fm")):
+            pass
+        else:
+            # acitvityId is build like event-round-group
+            # orderd in comp schedule
+            # todo could offer opportunity to sort in "wca sorting"
+            # build dict (or whatever it is python there are no datatypes) 'event' : '[comp,scr,judge,run]'
+            tmpHelp = a['activityId'].split('-') # alles was ich im studium gelehrnt habe. irgendeine variable/function oder irgendwas muss immer hilfe heißen. Wenn es hilfe schon gibt, alternative dann HILFE, mehrHilfe, maximalHilfe usw.
+            if not(tmpHelp[0] in assignments):
+                assignments[tmpHelp[0]] = [' ',' ',' ',' ']
+            if a['assignmentCode'] == 'competitor':
+                assignments[tmpHelp[0]][0] += (tmpHelp[2])[1:]
+            elif a['assignmentCode'] == 'staff-scrambler':
+                assignments[tmpHelp[0]][1] += (tmpHelp[2])[1:]
+            elif a['assignmentCode'] == 'staff-judge':
+                assignments[tmpHelp[0]][2] += (tmpHelp[2])[1:]     
+            elif a['assignmentCode'] == 'staff-run':
+                assignments[tmpHelp[0]][3] += (tmpHelp[2])[1:]
+    # todo do optional sorting
+    tex_builder += '{'
+    for k in assignments:
+        tex_builder += k + '&' + assignments[k][0] + '&' + assignments[k][1] + '&' + assignments[k][2] + '&' + assignments[k][3] + '\\\\'
+    tex_builder += '}'
+    print(tex_builder)
+
+# writing to tex/content.tex
+# overwriting everything, makes no sense if there is already something in
+f = open("tex/content.tex", "w")
+f.write(tex_builder)
+f.close()
+
+#writing comp name
+f = open("tex/name.tex", 'w')
+f.write(res_json['name'])
+f.close()
+
+
 
 # if order_by == 'name':
 #     competitors.sort_values(by=['Name'], inplace=True)
