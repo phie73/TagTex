@@ -3,6 +3,9 @@ import requests
 import numpy as np
 import pandas as pd
 import json
+import re 
+import unicodedata
+import pycountry
 
 # configuration
 parser = argparse.ArgumentParser(description="Main script")
@@ -38,15 +41,16 @@ persons = res_json['persons']
 tex_builder = ''
 for person in persons:
     # structure {Name}{WCAID}{country}{reg id}{assignments[event & comp & scr & judge & run\\]}
-    tex_builder += '\card' + '{' + person["name"] + '}' # todo handel chines or other character names
-    tex_builder += '{' + person["wcaId"] + '}' # todo newcommer handeling
-    tex_builder += '{' + person["countryIso2"] + '}' #todo replace by actual country name
+    tmpName = person["name"].replace('ä', '\\"{a}').replace('ó', "\\'{o}").replace('ü', '\\"{u}').replace('ö', '\\"{o}').replace("é", "\\'{e}").replace("É", "\\'{E}").replace("á", "\\'{a}") #latex is stupid no support for this kind of characters in commands and it is way easier to do something like this in python than in latex
+    tex_builder += '\card' + '{' + (tmpName, '\\begin{CJK*}{UTF8}{gbsn}' + tmpName + '\\end{CJK*}')[bool((re.compile(r'[\u4e00-\u9fff\u3000-\u303f\uff00-\uffef]')).search(person["name"])) != False] + '}'
+    tex_builder += '{' + (person["wcaId"], 'Newcommer')[person["wcaId"] == None] + '}'# either wcaId or 'Newcommer'
+    tex_builder += '{' + pycountry.countries.get(alpha_2=person["countryIso2"]).name + '}'
     tex_builder += '{' + str(person["registrantId"]) + '}'
 
     assignments = dict()
     for a in person['assignments']:
         a['activityId'] = mAAp[a['activityId']]
-
+        
         if (a['activityId'].startswith("333fm")):
             pass
         else:

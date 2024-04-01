@@ -3,6 +3,7 @@ charset-normalizer==3.3.2
 idna==3.6
 numpy==1.26.4
 pandas==2.2.1
+pycountry==23.12.11
 python-dateutil==2.9.0.post0
 pytz==2024.1
 requests==2.31.0
