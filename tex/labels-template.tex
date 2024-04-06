@@ -11,6 +11,7 @@
 \usepackage{anyfontsize}
 \usepackage[dvipsnames, table]{xcolor}
 \usepackage{graphicx}
+\usepackage{adjustbox}
 
 % language stuff
 \usepackage[ngerman]{babel}
@@ -18,7 +19,7 @@
 \usepackage{CJK}
 
 % load ticket.sty with the appropriate ticket definition
-\usepackage[flashCard,boxed]{ticket} %boxes
+\usepackage[flashCard,boxed]{ticket} 
 
 % i have no idea how big usual nametags are, so just going with something I found on **** which looks similar to the things usually used 
 \unitlength=1mm
@@ -34,7 +35,7 @@
 
 % what comes on the tag
 \newcommand{\card}[5]{\ticket{%
-    \put(41,36){\makebox[0mm]{\bfseries\Large #1}}%todo mit zu langen namen umgehen
+    \put(41,36){\makebox[0mm]{\maxsizebox*{78mm}{6.1mm}{\bfseries\Large #1}}}%todo mit zu langen namen umgehen
     \put(41,30){\makebox[0mm]{\bfseries #2}}%
     \put(41,25.5){\makebox[0mm]{id: #4}}%
     \put(41,20){\makebox[0mm]{\bfseries\large #3}}%
