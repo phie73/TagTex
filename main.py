@@ -14,6 +14,9 @@ parser.add_argument('-c',"--comp_id",
 parser.add_argument('-o',"--order_by",
                     help="Order of nametags for printing, options: id, name, default: id",
                     default='id')
+parser.add_argument('-od', "--print_orga_delegate",
+                    help="print orga and delegate role on nametag, options y, n, default: n",
+                    default='n')
 #parser.add_argument('-l',"--layout",
 #                    help="Number of nametags to place on a page,\
 #                    given by rows x columns x (h/p)\
@@ -24,6 +27,7 @@ args = parser.parse_args()
 # read in user args
 comp_id = args.comp_id
 order_by = args.order_by
+print_orga_delegate = args.print_orga_delegate
 
 # get competitor information for specific competition
 res = requests.get("https://worldcubeassociation.org/api/v0/competitions/" + comp_id + "/wcif/public")
@@ -43,9 +47,10 @@ for person in persons:
     # structure {Name}{WCAID}{country}{reg id}{assignments[event & comp & scr & judge & run\\]}
     tmpName = person["name"].replace('ä', '\\"{a}').replace('ó', "\\'{o}").replace('ü', '\\"{u}').replace('ö', '\\"{o}').replace("é", "\\'{e}").replace("É", "\\'{E}").replace("á", "\\'{a}") #latex is stupid no support for this kind of characters in commands and it is way easier to do something like this in python than in latex
     tex_builder += '\card' + '{' + (tmpName, '\\begin{CJK*}{UTF8}{gbsn}' + tmpName + '\\end{CJK*}')[bool((re.compile(r'[\u4e00-\u9fff\u3000-\u303f\uff00-\uffef]')).search(person["name"])) != False] + '}'
-    tex_builder += '{' + (person["wcaId"], 'Newcommer')[person["wcaId"] == None] + '}'# either wcaId or 'Newcommer'
+    tex_builder += '{' + (person["wcaId"], '\\textcolor{ForestGreen}{Newcomer}')[person["wcaId"] == None] + '}'# either wcaId or 'Newcommer'
     tex_builder += '{' + pycountry.countries.get(alpha_2=person["countryIso2"]).name + '}'
-    tex_builder += '{' + str(person["registrantId"]) + '}'
+    tex_builder += '{' + str(person["registrantId"]) 
+    tex_builder += ('' , ('', (' \\textcolor{Red}{' + " ".join(str(x) for x in person["roles"]) + '}'))[person["roles"] != []])[print_orga_delegate == 'y'] + '}'
 
     assignments = dict()
     for a in person['assignments']:
@@ -62,19 +67,18 @@ for person in persons:
             if not(tmpHelp[0] in assignments):
                 assignments[tmpHelp[0]] = [' ',' ',' ',' ']
             if a['assignmentCode'] == 'competitor':
-                assignments[tmpHelp[0]][0] += (tmpHelp[2])[1:]
+                assignments[tmpHelp[0]][0] += ((tmpHelp[2])[1:], (',' + (tmpHelp[2])[1:]))[assignments[tmpHelp[0]][0] != ' '] 
             elif a['assignmentCode'] == 'staff-scrambler':
-                assignments[tmpHelp[0]][1] += (tmpHelp[2])[1:]
+                assignments[tmpHelp[0]][1] += ((tmpHelp[2])[1:], (',' + (tmpHelp[2])[1:]))[assignments[tmpHelp[0]][1] != ' ']
             elif a['assignmentCode'] == 'staff-judge':
-                assignments[tmpHelp[0]][2] += (tmpHelp[2])[1:]     
+                assignments[tmpHelp[0]][2] += ((tmpHelp[2])[1:], (',' + (tmpHelp[2])[1:]))[assignments[tmpHelp[0]][2] != ' ']   
             elif a['assignmentCode'] == 'staff-run':
-                assignments[tmpHelp[0]][3] += (tmpHelp[2])[1:]
+                assignments[tmpHelp[0]][3] += ((tmpHelp[2])[1:], (',' + (tmpHelp[2])[1:]))[assignments[tmpHelp[0]][3] != ' ']
     # todo do optional sorting
     tex_builder += '{'
     for k in assignments:
         tex_builder += k + '&' + assignments[k][0] + '&' + assignments[k][1] + '&' + assignments[k][2] + '&' + assignments[k][3] + '\\\\'
     tex_builder += '}'
-    print(tex_builder)
 
 # writing to tex/content.tex
 # overwriting everything, makes no sense if there is already something in
