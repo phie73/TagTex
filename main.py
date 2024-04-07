@@ -42,6 +42,12 @@ for activity in activities:
         mAAp[child['id']] = child['activityCode']
 persons = res_json['persons']
 
+if order_by == 'name':
+    persons = sorted(persons, key=lambda persons: persons['name'])
+
+# event order
+EVENTORDER = ['333', '222', '444', '555', '666', '777', '333bf', '333fm', '333oh', 'clock', 'minx', 'pyram', 'skewb', 'sq1', '444bf', '555bf', '333mbf']
+
 tex_builder = ''
 for person in persons:
     # structure {Name}{WCAID}{country}{reg id}{assignments[event & comp & scr & judge & run\\]}
@@ -60,8 +66,6 @@ for person in persons:
             pass
         else:
             # acitvityId is build like event-round-group
-            # orderd in comp schedule
-            # todo could offer opportunity to sort in "wca sorting"
             # build dict (or whatever it is python there are no datatypes) 'event' : '[comp,scr,judge,run]'
             tmpHelp = a['activityId'].split('-') # alles was ich im studium gelehrnt habe. irgendeine variable/function oder irgendwas muss immer hilfe heißen. Wenn es hilfe schon gibt, alternative dann HILFE, mehrHilfe, maximalHilfe usw.
             if not(tmpHelp[0] in assignments):
@@ -75,6 +79,8 @@ for person in persons:
             elif a['assignmentCode'] == 'staff-run':
                 assignments[tmpHelp[0]][3] += ((tmpHelp[2])[1:], (',' + (tmpHelp[2])[1:]))[assignments[tmpHelp[0]][3] != ' ']
     # todo do optional sorting
+    assignments = {key: i for i, key in enumerate(EVENTORDER)}
+    print(assignments)
     tex_builder += '{'
     for k in assignments:
         tex_builder += k + '&' + assignments[k][0] + '&' + assignments[k][1] + '&' + assignments[k][2] + '&' + assignments[k][3] + '\\\\'
@@ -93,9 +99,7 @@ f.close()
 
 
 
-# if order_by == 'name':
-#     competitors.sort_values(by=['Name'], inplace=True)
-#     competitors.reset_index(drop=False, inplace=True)
+
 
 # names = competitors['Name']
 # countries = competitors['Country']
