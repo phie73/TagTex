@@ -78,12 +78,15 @@ for person in persons:
                 assignments[tmpHelp[0]][2] += ((tmpHelp[2])[1:], (',' + (tmpHelp[2])[1:]))[assignments[tmpHelp[0]][2] != ' ']   
             elif a['assignmentCode'] == 'staff-run':
                 assignments[tmpHelp[0]][3] += ((tmpHelp[2])[1:], (',' + (tmpHelp[2])[1:]))[assignments[tmpHelp[0]][3] != ' ']
-    # todo do optional sorting
+
+    # sorting
     assignments = {key: i for i, key in enumerate(EVENTORDER)}
     print(assignments)
     tex_builder += '{'
     for k in assignments:
-        tex_builder += k + '&' + assignments[k][0] + '&' + assignments[k][1] + '&' + assignments[k][2] + '&' + assignments[k][3] + '\\\\'
+        print(k)
+        print(assignments[k])
+        tex_builder += k + '&' + str(assignments[k][0]) + '&' + str(assignments[k][1]) + '&' + str(assignments[k][2]) + '&' + str(assignments[k][3]) + '\\\\'
     tex_builder += '}'
 
 # writing to tex/content.tex
