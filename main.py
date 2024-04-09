@@ -1,11 +1,10 @@
 import argparse
 import requests
-import numpy as np
-import pandas as pd
 import json
 import re 
 import unicodedata
 import pycountry
+from collections import OrderedDict
 
 # configuration
 parser = argparse.ArgumentParser(description="Main script")
@@ -35,11 +34,11 @@ res = requests.get("https://worldcubeassociation.org/api/v0/competitions/" + com
 # todo some checks for 200 and resonable answer
 res_json = res.json()
 activities = res_json['schedule']['venues'][0]['rooms'][0]['activities']
-mAAp = dict()
+activityIdMap = dict()
 for activity in activities:
-    mAAp[activity['id']] = activity['activityCode']
+    activityIdMap[activity['id']] = activity['activityCode']
     for child in activity['childActivities']:
-        mAAp[child['id']] = child['activityCode']
+        activityIdMap[child['id']] = child['activityCode']
 persons = res_json['persons']
 
 if order_by == 'name':
@@ -67,25 +66,25 @@ for person in persons:
     tex_builder += ('' , ('', (' \\textcolor{Red}{' + " ".join(str(x) for x in person["roles"]) + '}'))[person["roles"] != []])[print_orga_delegate == 'y'] + '}'
 
     assignments = dict()
-    for a in person['assignments']:
-        a['activityId'] = mAAp[a['activityId']]
+    for assignment in person['assignments']:
+        assignment['activityId'] = activityIdMap[assignment['activityId']]
         
-        if (a['activityId'].startswith("333fm")):
+        if (assignment['activityId'].startswith("333fm")):
             pass
         else:
             # acitvityId is build like event-round-group
             # build dict (or whatever it is python there are no datatypes) 'event' : '[comp,scr,judge,run]'
-            tmpHelp = a['activityId'].split('-') # alles was ich im studium gelehrnt habe. irgendeine variable/function oder irgendwas muss immer hilfe heißen. Wenn es hilfe schon gibt, alternative dann HILFE, mehrHilfe, maximalHilfe usw.
-            if not(tmpHelp[0] in assignments):
-                assignments[tmpHelp[0]] = [' ',' ',' ',' ']
-            if a['assignmentCode'] == 'competitor':
-                assignments[tmpHelp[0]][0] += ((tmpHelp[2])[1:], (',' + (tmpHelp[2])[1:]))[assignments[tmpHelp[0]][0] != ' '] 
-            elif a['assignmentCode'] == 'staff-scrambler':
-                assignments[tmpHelp[0]][1] += ((tmpHelp[2])[1:], (',' + (tmpHelp[2])[1:]))[assignments[tmpHelp[0]][1] != ' ']
-            elif a['assignmentCode'] == 'staff-judge':
-                assignments[tmpHelp[0]][2] += ((tmpHelp[2])[1:], (',' + (tmpHelp[2])[1:]))[assignments[tmpHelp[0]][2] != ' ']   
-            elif a['assignmentCode'] == 'staff-run':
-                assignments[tmpHelp[0]][3] += ((tmpHelp[2])[1:], (',' + (tmpHelp[2])[1:]))[assignments[tmpHelp[0]][3] != ' ']
+            activity = assignment['activityId'].split('-') 
+            if not(activity[0] in assignments):
+                assignments[activity[0]] = [' ',' ',' ',' ']
+            if assignment['assignmentCode'] == 'competitor':
+                assignments[activity[0]][0] += ((activity[2])[1:], (',' + (activity[2])[1:]))[assignments[activity[0]][0] != ' '] 
+            elif assignment['assignmentCode'] == 'staff-scrambler':
+                assignments[activity[0]][1] += ((activity[2])[1:], (',' + (activity[2])[1:]))[assignments[activity[0]][1] != ' ']
+            elif assignment['assignmentCode'] == 'staff-judge':
+                assignments[activity[0]][2] += ((activity[2])[1:], (',' + (activity[2])[1:]))[assignments[activity[0]][2] != ' ']   
+            elif assignment['assignmentCode'] == 'staff-run':
+                assignments[activity[0]][3] += ((activity[2])[1:], (',' + (activity[2])[1:]))[assignments[activity[0]][3] != ' ']
 
     # sorting
     # assignments = {key: i for i, key in enumerate(EVENTORDER)}
