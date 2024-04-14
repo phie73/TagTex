@@ -51,8 +51,16 @@ EVENTORDER = ['333', '222', '444', '555', '666', '777', '333bf', '333fm', '333oh
 tex_builder = ''
 for person in persons:
     # structure {Name}{WCAID}{country}{reg id}{assignments[event & comp & scr & judge & run\\]}
-    tmpName = person["name"].replace('ä', '\\"{a}').replace('ó', "\\'{o}").replace('ü', '\\"{u}').replace('ö', '\\"{o}').replace("é", "\\'{e}").replace("É", "\\'{E}").replace("á", "\\'{a}") #latex is stupid no support for this kind of characters in commands and it is way easier to do something like this in python than in latex
-    tex_builder += '\card' + '{' + (tmpName, '\\begin{CJK*}{UTF8}{gbsn}' + tmpName + '\\end{CJK*}')[bool((re.compile(r'[\u4e00-\u9fff\u3000-\u303f\uff00-\uffef]')).search(person["name"])) != False] + '}'
+    if (bool((re.compile(r'[\u0400-\u04FF]+')).search(person["name"])) == True): #cyrill letters
+        a = person["name"].split()
+        a[2] = '(\\foreignlanguage{russian}{' + a[0]
+        a[3] = a[1] + '})'
+        tmpName = ' '.join(a)
+    elif (bool((re.compile(r'[\u4e00-\u9fff\u3000-\u303f\uff00-\uffef]')).search(person["name"])) == True): #chinese
+        tmpName = '\\begin{CJK*}{UTF8}{gbsn}' + person["name"] + '\\end{CJK*}'
+    else:
+        tmpName = person["name"].replace('ä', '\\"{a}').replace('ó', "\\'{o}").replace('ü', '\\"{u}').replace('ö', '\\"{o}').replace("é", "\\'{e}").replace("É", "\\'{E}").replace("á", "\\'{a}") #latex is stupid no support for this kind of characters in commands and it is way easier to do something like this in python than in latex
+    tex_builder += '\card' + '{' + tmpName + '}'
     tex_builder += '{' + (person["wcaId"], '\\textcolor{ForestGreen}{Newcomer}')[person["wcaId"] == None] + '}'# either wcaId or 'Newcommer'
     tex_builder += '{' + pycountry.countries.get(alpha_2=person["countryIso2"]).name + '}'
     tex_builder += '{' + str(person["registrantId"]) 
@@ -80,12 +88,9 @@ for person in persons:
                 assignments[tmpHelp[0]][3] += ((tmpHelp[2])[1:], (',' + (tmpHelp[2])[1:]))[assignments[tmpHelp[0]][3] != ' ']
 
     # sorting
-    assignments = {key: i for i, key in enumerate(EVENTORDER)}
-    print(assignments)
+    # assignments = {key: i for i, key in enumerate(EVENTORDER)}
     tex_builder += '{'
     for k in assignments:
-        print(k)
-        print(assignments[k])
         tex_builder += k + '&' + str(assignments[k][0]) + '&' + str(assignments[k][1]) + '&' + str(assignments[k][2]) + '&' + str(assignments[k][3]) + '\\\\'
     tex_builder += '}'
 
