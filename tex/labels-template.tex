@@ -24,22 +24,22 @@
 
 % i have no idea how big usual nametags are, so just going with something I found on **** which looks similar to the things usually used 
 \unitlength=1mm
-\ticketSize{82}{55}
+\ticketSize{90}{55}
 \ticketNumbers{2}{5}
 
 %% --- front ----%
 % default nametag. \ticketdefault is somewhat like a background
 \renewcommand{\ticketdefault}{%
-  \put(41, 2){\makebox[0mm]{\includegraphics[width=42mm]{img/GCA_original_larger}}}%todo do something with that
-  \put(41, 45){\makebox[0mm]{\resizebox*{78mm}{!}{\Large \input{name}}}}
+  \put(45, 2){\makebox[0mm]{\includegraphics[width=42mm]{img/GCA_original_larger}}}%todo do something with that
+  \put(45, 45){\makebox[0mm]{\maxsizebox*{78mm}{9.2mm}{\Large \input{name}}}}
 }
 
 % what comes on the tag
 \newcommand{\card}[5]{\ticket{%
-    \put(41,36){\makebox[0mm]{\maxsizebox*{78mm}{6.1mm}{\bfseries\Large #1}}}%todo mit zu langen namen umgehen
-    \put(41,30){\makebox[0mm]{\bfseries #2}}%
-    \put(41,25.5){\makebox[0mm]{id: #4}}%
-    \put(41,20){\makebox[0mm]{\bfseries\large #3}}%
+    \put(45,36){\makebox[0mm]{\maxsizebox*{78mm}{6.1mm}{\bfseries\Large #1}}}%todo mit zu langen namen umgehen
+    \put(45,30){\makebox[0mm]{\bfseries #2}}%
+    \put(45,25.5){\makebox[0mm]{id: #4}}%
+    \put(45,20){\makebox[0mm]{\bfseries\large #3}}%
 }}
 
 \input{table}
@@ -53,7 +53,7 @@
 \renewcommand{\ticketdefault}{%
 }
 \renewcommand{\card}[5]{\ticket{%
-  \put(41,27){\makebox[0mm]{\tab{#5}}}%
+  \put(45,27){\makebox[0mm]{\tab{#5}}}%
 }}
 \input{content}
 \end{document}
