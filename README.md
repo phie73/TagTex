@@ -30,4 +30,5 @@ It is advisable to check with a 100% scaled view of the resulting PDF if the siz
 - duplex drucker
     - welp latex kann das wohl nicht so einfach
 - man kann noch über flaggen bei ländern nachdenken
+- event symbols
 - nicht genutzte assignments
