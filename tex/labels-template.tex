@@ -6,10 +6,7 @@
 \documentclass[a4paper,12pt]{article}
 
 % load misc stuff
-\usepackage{graphicx}
-\usepackage{anyfontsize}
 \usepackage[dvipsnames, table]{xcolor}
-\usepackage{graphicx}
 \usepackage{adjustbox}
 
 % language stuff
@@ -21,7 +18,7 @@
 % load ticket.sty with the appropriate ticket definition
 \usepackage[flashCard,boxed]{ticket} 
 
-% i have no idea how big usual nametags are, so just going with something I found on **** which looks similar to the things usually used 
+% size of nametags
 \unitlength=1mm
 \ticketSize{90}{55}
 \ticketNumbers{2}{5}
@@ -30,13 +27,13 @@
 %% --- front ----%
 % default nametag. \ticketdefault is somewhat like a background
 \renewcommand{\ticketdefault}{%
-  \put(45, 2){\makebox[0mm]{\includegraphics[width=42mm]{img/GCA_original_larger}}}%todo do something with that
+  \put(45, 2){\makebox[0mm]{\includegraphics[width=42mm]{img/GCA_original_larger}}}
   \put(45, 45){\makebox[0mm]{\maxsizebox*{78mm}{9.2mm}{\Large \input{name}}}}
 }
 
-% what comes on the tag
+% comp/ person specific stuff
 \newcommand{\card}[5]{\ticket{%
-    \put(45,36){\makebox[0mm]{\maxsizebox*{78mm}{6.1mm}{\bfseries\Large #1}}}%todo mit zu langen namen umgehen
+    \put(45,36){\makebox[0mm]{\maxsizebox*{78mm}{6.1mm}{\bfseries\Large #1}}}
     \put(45,30){\makebox[0mm]{\bfseries #2}}%
     \put(45,25.5){\makebox[0mm]{id: #4}}%
     \put(45,20){\makebox[0mm]{\bfseries\large #3}}%
@@ -46,7 +43,7 @@
 
 \sffamily
 \input{content}
-% % --- change stuff for back side ---%
+% % --- changes for back side ---%
 \backside%
 \oddsidemargin=-22mm %same as marigin on right on even pages
 \renewcommand{\ticketdefault}{%

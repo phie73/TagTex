@@ -466,3 +466,4 @@ TSWLatexianTemp*
 ## just to prevent pushing personal data
 tex/content.tex
 tex/name.tex
+*.pdf
