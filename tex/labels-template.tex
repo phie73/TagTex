@@ -1,5 +1,4 @@
 %%%%
-%
 % inspired by:  https://tex.stackexchange.com/questions/94582/automating-the-creation-of-name-badges-for-an-event
 % discoverd docs: https://ctan.net/macros/latex/contrib/ticket/doc/manual.pdf
 %%%%
@@ -14,10 +13,10 @@
 \usepackage{adjustbox}
 
 % language stuff
-\usepackage[OT2, T1]{fontenc}
+\usepackage[T2A,T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage[russian,english]{babel}
-\usepackage{CJK}
+\usepackage{CJKutf8}
+\usepackage[ukrainian,german]{babel}
 
 % load ticket.sty with the appropriate ticket definition
 \usepackage[flashCard,boxed]{ticket} 
@@ -27,6 +26,7 @@
 \ticketSize{90}{55}
 \ticketNumbers{2}{5}
 
+\begin{document}
 %% --- front ----%
 % default nametag. \ticketdefault is somewhat like a background
 \renewcommand{\ticketdefault}{%
@@ -44,12 +44,11 @@
 
 \input{table}
 
-\begin{document}
 \sffamily
 \input{content}
 % % --- change stuff for back side ---%
 \backside%
-\oddsidemargin=-14mm %same as marigin on right on even pages
+\oddsidemargin=-22mm %same as marigin on right on even pages
 \renewcommand{\ticketdefault}{%
 }
 \renewcommand{\card}[5]{\ticket{%
