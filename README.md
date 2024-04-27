@@ -1,5 +1,5 @@
 # TagTex
-Creating custom nametags, badges. Planning to use Python + LaTeX only.
+Creating custom nametags, badges. ~~Planning to use~~ Using Python + LaTeX only.
 
 ### Preparation:
 - you need python
@@ -25,22 +25,9 @@ pdflatex lables-tamplate.tex
 ```
 It is advisable to check with a 100% scaled view of the resulting PDF if the size fits with your physical nametags before printing and cutting. The labels package documentation can assist with choosing other dimensions for whitespace on the sheets or a different setup of the grid, and the current example has been tested with 55 x 90 mm tags.
 
-#### Used at
-- Rheinland-Pfalz Open 2023
-- Everstädter Einsteiger Event / Darmstadt Dodecahedron Days 2023
-- Kölner Kubing 2023
-
-
 # todo
 
-- fix hack with ä
-- fix hack with ó
-- gibt bestimmt noch weitere charackter, die zu fehlern führen, müsste man dann auch fixen
 - duplex drucker
     - welp latex kann das wohl nicht so einfach
-    - python schon
-    - plan ein fuer windows absolut nicht benutzbares skrip produzieren, was dann auch die order fuer duplex printers fixt
-        - in even und odd pages splitten
-        - die dann wieder zusammenordnen 
-        - es ist zu spaet fuer sinnvolle ideen
 - man kann noch über flaggen bei ländern nachdenken
+- nicht genutzte assignments
