@@ -30,7 +30,12 @@ res_json = res.json()
 if "error" in res_json:
     print(res_json["error"])
     quit()
-activities = res_json['schedule']['venues'][0]['rooms'][0]['activities']
+
+# multiple rooms
+activities = []
+for x in range(len(res_json['schedule']['venues'][0]['rooms'])):
+    activities += res_json['schedule']['venues'][0]['rooms'][x]['activities']
+
 activityIdMap = dict()
 for activity in activities:
     activityIdMap[activity['id']] = activity['activityCode']
@@ -97,4 +102,3 @@ f.close()
 f = open("tex/name.tex", 'w')
 f.write(res_json['name'])
 f.close()
-
