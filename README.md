@@ -8,8 +8,7 @@ Creating custom nametags, badges. ~~Planning to use~~ Using Python + LaTeX only.
 pip install -r requirements.txt
 ```
 - you need latex (texlive for example)
-- additional not included in must texlive instalations
-- [texlive-lang](https://wiki.archlinux.org/title/TeX_Live/CJK)
+- additional not included in must texlive instalations: [texlive-lang](https://wiki.archlinux.org/title/TeX_Live/CJK)
 
 ### Example usage:
 ```shell
@@ -32,3 +31,6 @@ It is advisable to check with a 100% scaled view of the resulting PDF if the siz
 - man kann noch über flaggen bei ländern nachdenken
 - event symbols
 - nicht genutzte assignments
+- irgendwie schön comp logos noch reinbasteln (auch optional steuerbar)
+- Tag größe über parameter steuern
+- tabelle mit assignments von unten nach oben wachsen lassen (weil klammer)
