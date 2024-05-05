@@ -34,3 +34,5 @@ It is advisable to check with a 100% scaled view of the resulting PDF if the siz
 - irgendwie schön comp logos noch reinbasteln (auch optional steuerbar)
 - Tag größe über parameter steuern
 - tabelle mit assignments von unten nach oben wachsen lassen (weil klammer)
+- Comp Logo/WCA Logo integrieren (siehe Wendlingen NameTag)
+- Georgisch, Thai Namen suppot (allgemein nochmal schauen was für Zeichensätze es noch gibt, die hier auf Comps auftauchen könnten)
