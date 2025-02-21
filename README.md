@@ -1,3 +1,5 @@
+Originally forked from someone else. The state back than was not able to do double sited printing, neither was using wcif-api. There was some calculation of the competitor id based on all accepted competitors and all competitors, done by downloading those csv files. I figured out how to use wcif for creating this nametags. The other person just copied my ideas to thier repo and made it closed sourced. Using it and never giving credits to me or anyone else contributing. 
+
 # TagTex
 Creating custom nametags, badges. ~~Planning to use~~ Using Python + LaTeX only.
 
